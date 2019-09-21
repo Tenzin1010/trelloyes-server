@@ -6,6 +6,7 @@ const helmet = require('helmet')
 const winston = require('winston')
 const {NODE_ENV} = require('./config')
 const uuid = require('uuid/v4')
+const cardRouter = require('./card/card-router')
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors())
 app.use(express.json())
+
 
 const logger = winston.createLogger({
   level: 'info',
@@ -56,6 +58,8 @@ app.use(function validateBearerToken(req, res, next) {
   // move to the next middleware
   next()
 })
+
+app.use(card-router)
 
 //POST new Card in the Cards array
 app.post('/card', (req, res) => {
@@ -181,16 +185,15 @@ app.delete('/list/:id', (req, res) => {
 //5. delete the matching id (splice)
 //6. log response (logger.info) (status 204)
 app.delete('/card/:id', (req, res) => {
+  const { id } = req.params;
 
-  const {id} = req.params;
+  const cardIndex = cards.findIndex(c => c.id == id);
 
-  const cardIndex = cards.findIndex(ci => ci.id == id)
-  
-  if(cardIndex == -1) {
-    logger.error(`Card with id ${id} not found`)
-    res
-      .status(400)
-      .send('Card not found')
+  if (cardIndex === -1) {
+    logger.error(`Card with id ${id} not found.`);
+    return res
+      .status(404)
+      .send('Not found');
   }
  
 //remove card from lists
@@ -200,13 +203,14 @@ app.delete('/card/:id', (req, res) => {
     list.cardIds = cardIds;
   });
 
-cards.splice(cardIndex, 1)
+  cards.splice(cardIndex, 1);
 
-logger.info(`Card with id ${id} deleted`)
-res
-  .status(204)
-  .end()
-})
+  logger.info(`Card with id ${id} deleted.`);
+
+  res
+    .status(204)
+    .end();
+});
 
 
 //GET card 
