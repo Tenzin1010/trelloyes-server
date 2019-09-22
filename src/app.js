@@ -6,7 +6,7 @@ const helmet = require('helmet')
 const winston = require('winston')
 const {NODE_ENV} = require('./config')
 const uuid = require('uuid/v4')
-const cardRouter = require('./card/card-router')
+
 
 const app = express();
 
@@ -59,7 +59,6 @@ app.use(function validateBearerToken(req, res, next) {
   next()
 })
 
-app.use(card-router)
 
 //POST new Card in the Cards array
 app.post('/card', (req, res) => {
