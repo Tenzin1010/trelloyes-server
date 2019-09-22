@@ -9,7 +9,7 @@ cardRouter
     .get((req, res) =>{
 
     })
-    .post(bodyParser, (req, res) => {
+    .post(bodyParser, (req, res) => { 
         
     })
 
