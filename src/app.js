@@ -3,10 +3,9 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
-
 const {NODE_ENV} = require('./config')
 
-const uuid = require('uuid/v4')
+
 const cardRouter = require('./card/card-router')
 const listRouter = require('./list/list-router');
 
@@ -14,18 +13,13 @@ const app = express();
 
 const morganOption = (NODE_ENV === 'production') ? 'tiny': 'common';
 
-app.use(morgan(morganOption));
+app.use(morgan((morganOption)));
 app.use(helmet());
 app.use(cors())
 app.use(cardRouter)
 app.use(listRouter)
 
 
-if (NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple()
-  }));
-}
 
 //authorization middleware, validates with Authorization header, Server-side programming/9. POST and DELETE request
 app.use(function validateBearerToken(req, res, next) {
@@ -41,6 +35,7 @@ app.use(function validateBearerToken(req, res, next) {
 })
 
 app.use(card-router)
+app.use(list-router)
 
 //DELETE List 
 //1. set the value of id entered by user const {id}

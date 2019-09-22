@@ -1,5 +1,5 @@
 //modularizing our code 
-const {express} = require('express');
+const express = require('express');
 const uuid = require('uuid/v4');
 const logger = require('../logger');
 const {cards, lists} = require('../store');
@@ -7,9 +7,6 @@ const {cards, lists} = require('../store');
 
 const cardRouter = express.Router();
 const bodyParser = express.json();
-
-//create a cards 
-
 
 cardRouter
     .route('/card')
