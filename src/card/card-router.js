@@ -53,7 +53,7 @@ res
 
 cardRouter
     .route('/card/:id')
-    .get((req, res => {
+    .get((req, res) => {
         const {id} = req.params;
         const card = cards.find(c => c.id == id)
       
@@ -64,7 +64,7 @@ cardRouter
             .send('Card Not Found'); //logged in postman response
         }
         res.json(card);
-    }))
+    })
     .delete(bodyParser, (req, res) => {
         const { id } = req.params;
 

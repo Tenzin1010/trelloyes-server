@@ -84,9 +84,10 @@ listRouter
 
   //validate if listIndex exists
   if (listIndex === -1) {
-    logged.error(`List with ${id} not found`)
-    .status(400)
-    .send('Not found')
+    logger.error(`List with ${id} not found`)
+    return res
+      .status(400)
+      .send('Not found')
   }
 //IF id matched delete it. splice(a, b) a is the index value of the element to be removed
 //b is the number of elements to remove, in this case only 1
